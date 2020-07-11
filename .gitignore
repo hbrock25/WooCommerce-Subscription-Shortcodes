@@ -4,3 +4,4 @@ sitemap.xml
 *.log
 sitemap.xml.gz
 *~
+build.sh

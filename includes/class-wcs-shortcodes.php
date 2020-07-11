@@ -1009,9 +1009,10 @@ class WCSS_Shortcodes {
 		if ( sizeof ( $subscription_items = $subscription->get_items() ) > 0 ) {
 		    foreach ( $subscription_items as $item_id => $item ) {
 //			if ( preg_match('/^HCA-A.*/', $item->get_product()->get_sku()) === true ) {
-			if ( $item->get_product()->get_id() == 226548 ) {
+			$ID = $item->get_product()->get_id();
+			if ($ID == 226548 || $ID == 225362 || $ID == 43122 ) {
 			    echo 'Your HCA membership expires on '
-			       . date(get_option('date_format'), $subscription->get_date( 'last_payment' ))
+			       . date(get_option('date_format'), $subscription->get_date( 'next_payment' ))
 			       . '. | <a href="/academy/current-members">Renew</a> | '
 			       . '<a href="/academy/my-account">My Account</a> | <a href="' 
 			       . wc_logout_url() . '">Logout</a>';
@@ -1027,9 +1028,10 @@ class WCSS_Shortcodes {
 	    if ( $subscription->has_status( 'expired' )) {
 		if ( sizeof ( $subscription_items = $subscription->get_items() ) > 0 ) {
 		    foreach ( $subscription_items as $item_id => $item ) {
-			if ( preg_match('/^HCA-A.*', $item->get_product()->get_sku()) === true ) {
-			    echo 'Your HCA membership expires on '
-			       . date(get_option('date_format'), $subscription->get_date( 'last_payment' ))
+			$ID = $item->get_product()->get_id();
+			if ($ID == 226548 || $ID == 225362 || $ID == 43122 ) {
+			    echo 'Your HCA membership expired on '
+			       . date(get_option('date_format'), $subscription->get_date( 'end' ))
 			       . '. | <a href="/academy/current-members">Renew</a> | '
 			       . '<a href="/academy/my-account">My Account</a> | <a href="' 
 			       . wc_logout_url() . '">Logout</a>';

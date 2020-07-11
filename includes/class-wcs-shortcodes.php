@@ -1008,7 +1008,8 @@ class WCSS_Shortcodes {
 	    if ( $subscription->has_status( 'active' )) {
 		if ( sizeof ( $subscription_items = $subscription->get_items() ) > 0 ) {
 		    foreach ( $subscription_items as $item_id => $item ) {
-			if ( preg_match('/^HCA-A.*/', $item->get_product()->get_sku()) === true ) {
+//			if ( preg_match('/^HCA-A.*/', $item->get_product()->get_sku()) === true ) {
+			if ( $item->get_product()->get_id() == 226548 ) {
 			    echo 'Your HCA membership expires on '
 			       . date(get_option('date_format'), $subscription->get_date( 'last_payment' ))
 			       . '. | <a href="/academy/current-members">Renew</a> | '

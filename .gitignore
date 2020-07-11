@@ -1,0 +1,6 @@
+build/
+.htaccess
+sitemap.xml
+*.log
+sitemap.xml.gz
+*~

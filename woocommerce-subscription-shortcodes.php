@@ -1,10 +1,10 @@
 <?php
 /*
- * Plugin Name: WooCommerce Subscription Shortcodes
+ * Plugin Name: WooCommerce Subscription Shortcodes for HCA
  * Plugin URI:  https://github.com/seb86/WooCommerce-Subscription-Shortcodes
  * Description: Experimental extension providing a few shortcodes that you can use to add details about the subscription product where you want them to be.
- * Version:     1.0.0 Beta
- * Author:      Sébastien Dumont
+ * Version:     1.0.0 
+ * Author:      Sébastien Dumont and Hugh Brock
  * Author URI:  https://sebastiendumont.com
  *
  * Text Domain: woocommerce-subscription-shortcodes

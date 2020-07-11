@@ -995,7 +995,7 @@ class WCSS_Shortcodes {
 
 	//no user ID? bail
 	if($user->ID == 0) {
-	    echo '<a href="/my-account">Login</a> | <a href="/my-account">Register</a>';
+	    echo '<a href="/academy/my-account">Login</a>';
 	    return ob_get_clean();
 	}
 	

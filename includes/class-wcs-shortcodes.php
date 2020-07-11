@@ -988,30 +988,9 @@ class WCSS_Shortcodes {
     public static function get_subscription_status_hca( $atts ) {
 	global $wpdb, $post;
 
-	$defaults = shortcode_atts( array(
-	    'id'           => '',
-	    'sku'          => '',
-	), $atts );
-
-	$atts = wp_parse_args( $atts, $defaults );
-
-	if ( ! empty( $atts['id'] ) && $atts['id'] > 0 ) {
-	    $product_data = wc_get_product( $atts['id'] );
-	} elseif ( ! empty( $atts['sku'] ) ) {
-	    $product_id   = wc_get_product_id_by_sku( $atts['sku'] );
-	    $product_data = get_post( $product_id );
-	} else {
-	    $product_data = wc_get_product( $post->ID );
-	}
-
 	//find user
 	$user = wp_get_current_user();
 	
-	// Check that the product type is supported. Return blank if not supported.
-	if ( ! is_object( $product_data ) || ! in_array( $product_data->product_type, self::get_supported_product_types() ) ) {
-	    return '';
-	}
-
 	ob_start();
 
 	//no user ID? bail
@@ -1023,27 +1002,38 @@ class WCSS_Shortcodes {
 	// Get subscriptions
 	$subscriptions = wcs_get_users_subscriptions( $user->ID );
 
-	// got some subscriptions. If there's an active one that matches "HCA-A", return it
+	// got some subscriptions. If there's an active one with a product
+	// that matches "HCA-A", return it
 	foreach ( $subscriptions as $index => $subscription ) {
-	    if ( $subscription->has_status( 'active' ) && preg_match('^HCA-A', $subscription->get_sku()) === true ) {
-		echo 'Your HCA membership expires on '
-		   . date(get_option('date_format'), $subscription->get_date( 'last_payment' ))
-		   . '. | <a href="/academy/current-members">Renew</a> | '
-		   . '<a href="/academy/my-account">My Account</a> | <a href="' 
-		   . wc_logout_url() . '">Logout</a>';
-		return ob_get_clean();
+	    if ( $subscription->has_status( 'active' )) {
+		$subscription_products = $subscription->get_items();
+		foreach ( $subscription_products as $index => $product ) {
+		    if ( preg_match('^HCA-A', $product->get_sku()) === true ) {
+			echo 'Your HCA membership expires on '
+			   . date(get_option('date_format'), $subscription->get_date( 'last_payment' ))
+			   . '. | <a href="/academy/current-members">Renew</a> | '
+			   . '<a href="/academy/my-account">My Account</a> | <a href="' 
+			   . wc_logout_url() . '">Logout</a>';
+			return ob_get_clean();
+		    }
+		}
 	    }
 	}
 
 	// No active subscriptions, perhaps there is an expired one?
 	foreach ( $subscriptions as $index => $subscription ) {
-	    if ( $subscription->has_status( 'expired' ) && preg_match('^HCA-A', $subscription->get_sku()) === true ) {
-		echo 'Your HCA membership expired on '
-		   . date(get_option('date_format'), $subscription->get_date( 'end' ))
-		   . '. | <a href="/academy/current-members">Renew</a> | '
-		   . '<a href="/academy/my-account">My Account</a> | <a href="' 
-		   . wc_logout_url() . '">Logout</a>';
-		return ob_get_clean();
+	    if ( $subscription->has_status( 'expired' )) {
+		$subscription_products = $subscription->get_items();
+		foreach ( $subscription_products as $index => $product ) {
+		    if ( preg_match('^HCA-A', $product->get_sku()) === true ) {
+			echo 'Your HCA membership expired on '
+			   . date(get_option('date_format'), $subscription->get_date( 'end' ))
+			   . '. | <a href="/academy/current-members">Renew</a> | '
+			   . '<a href="/academy/my-account">My Account</a> | <a href="' 
+			   . wc_logout_url() . '">Logout</a>';
+			return ob_get_clean();
+		    }
+		}
 	    }
 	}
 

@@ -1012,8 +1012,7 @@ class WCSS_Shortcodes {
 			$ID = $item->get_product()->get_id();
 			if ($ID == 226548 || $ID == 225362 || $ID == 43122 ) {
 			    echo 'Your HCA membership expires on '
-			    //			       . date(get_option('date_format'), $subscription->get_date( 'next_payment' ))
-			       . $subscription->get_date( 'next_payment' )
+			    . date(get_option('date_format'), strtotime($subscription->get_date( 'next_payment' )))
 			       . '. | <a href="/academy/current-members">Renew</a> | '
 			       . '<a href="/academy/my-account">My Account</a> | <a href="' 
 			       . wc_logout_url() . '">Logout</a>';
@@ -1032,7 +1031,7 @@ class WCSS_Shortcodes {
 			$ID = $item->get_product()->get_id();
 			if ($ID == 226548 || $ID == 225362 || $ID == 43122 ) {
 			    echo 'Your HCA membership expired on '
-			       . date(get_option('date_format'), $subscription->get_date( 'end' ))
+			       . date(get_option('date_format'), strtotime($subscription->get_date( 'end' )))
 			       . '. | <a href="/academy/current-members">Renew</a> | '
 			       . '<a href="/academy/my-account">My Account</a> | <a href="' 
 			       . wc_logout_url() . '">Logout</a>';
